@@ -14,4 +14,8 @@ def test_case3():
     b = 3
     result = my_app.multiply_array(a, b)
     is_equal = (result == [[3, 3, 3], [3, 3, 3], [3, 3, 3]]).all()
-    assert is_equal == True
+    assert result == is_equal
+
+def test_case4():
+    result = my_app.add_numbers(20, 10)
+    assert result == 30
