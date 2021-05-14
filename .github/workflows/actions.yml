@@ -1,3 +1,5 @@
+# CICD actions for the Application testing during the push at staging branch.
+
 name: CICD Actions
 on:
   push:
