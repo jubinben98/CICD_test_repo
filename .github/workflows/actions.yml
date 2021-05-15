@@ -31,16 +31,30 @@ jobs:
         run: |
           python -m pytest -v
 
-  merge-branch:
+  create-pull-request:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v2
-       # Push to the production branch
-      - name: Merge staging -> production
-        uses: devmasx/merge-branch@v1.3.1
+      - name: Raising PR to production
+        uses: repo-sync/pull-request@v2
         with:
-          type: now
-          from_branch: staging
-          target_branch: production
-          github_token: ${{ github.token }}
+          source_branch: "staging"
+          destination_branch: "production"
+          pr_title: "Pulling ${{ github.ref }} into master"
+          pr_body: ":crown: *An automated PR*"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+#  merge-to-production:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - uses: actions/checkout@v2
+#       # Push to the production branch
+#      - name: Merge staging -> production
+#        uses: devmasx/merge-branch@v1.3.1
+#        with:
+#          type: now
+#          from_branch: staging
+#          target_branch: production
+#          github_token: ${{ github.token }}
