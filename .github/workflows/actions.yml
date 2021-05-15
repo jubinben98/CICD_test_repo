@@ -32,8 +32,10 @@ jobs:
           python -m pytest -v
 
       # Deploy to local repo
-      - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
+      - name: Push to production branch
+        uses: Automattic/action-commit-to-branch@master
+        with:
+          branch: 'production'
+          commit_message: 'Push from staging -> production'
         env:
-          REPO: self
-          BRANCH: production
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
