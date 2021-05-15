@@ -7,7 +7,7 @@ on:
       - staging
 
 jobs:
-  build:
+  build-test:
     runs-on: windows-latest
     steps:
 
@@ -31,23 +31,32 @@ jobs:
         run: |
           python -m pytest -v
 
-  create-pull-request:
+ # Job for raising the pull request
+  Raising-pull-request:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-test
     steps:
       - uses: actions/checkout@v2
       - name: Raising PR to production
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "staging"
           destination_branch: "production"
-          pr_title: "Pulling ${{ github.ref }} into master"
-          pr_body: ":crown: *An automated PR*"
+          pr_title: "Automated PR from staging"
+          pr_body: |
+            Author          : ${{ github.actor }}
+            Last Commit SHA : ${{ github.sha }}
+            Full-reference  : ${{ github.ref }}
+            Head-reference  : ${{ github.head_ref }}
+            Base-reference  : ${{ github.base_ref }}
+            Action Path     : ${{ github.action_path }}
+            Event           : ${{ github.event }}
+            Event-name      : ${{ github.event_name }}
+            Event-path      : ${{ github.event_path }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 #  merge-to-production:
 #    runs-on: ubuntu-latest
-#    needs: build
+#    needs: build-test
 #    steps:
 #      - uses: actions/checkout@v2
 #       # Push to the production branch
