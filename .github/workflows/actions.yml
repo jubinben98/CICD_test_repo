@@ -30,12 +30,13 @@ jobs:
       - name: Run with pytest.
         run: |
           python -m pytest -v
-
-      # Deploy to local repo
-      - name: Push to production branch
-        uses: Automattic/action-commit-to-branch@master
-        with:
-          branch: 'production'
-          commit_message: 'Push from staging -> production'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+      runs-on : ubuntu-latest
+      steps:
+        - name: Push to production branch
+          uses: Automattic/action-commit-to-branch@master
+          with:
+            branch: 'production'
+            commit_message: 'Push from staging -> production'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
