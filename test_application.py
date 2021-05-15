@@ -19,3 +19,7 @@ def test_case3():
 def test_case4():
     result = my_app.add_numbers(20, 10)
     assert result == 30
+
+def test_case5():
+    result = my_app.add_numbers(20, 20)
+    assert result == 40
