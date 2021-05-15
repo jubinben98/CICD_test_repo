@@ -30,13 +30,13 @@ jobs:
       - name: Run with pytest.
         run: |
           python -m pytest -v
-  deploy:
-      runs-on : ubuntu-latest
-      steps:
-        - name: Push to production branch
-          uses: Automattic/action-commit-to-branch@master
-          with:
-            branch: 'production'
-            commit_message: 'Push from staging -> production'
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Push to the production branch
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: production
+          FOLDER: build # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Push from staging -> production"
