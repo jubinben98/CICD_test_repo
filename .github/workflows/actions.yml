@@ -36,6 +36,6 @@ jobs:
         run: |
           git config --global user.name "Jubin Ben"
           git config --global user.email "jubinben.666@gmail.com"
-          git add -A
-          git commit -m "All test cases passed so push staging -> production"
+          git checkout production
+          git merge staging -m "All test cases passed so push staging -> production"
           git push origin production
