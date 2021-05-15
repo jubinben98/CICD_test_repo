@@ -14,6 +14,8 @@ jobs:
       # Checking out the code
       - name: Checkout the code.
         uses: actions/checkout@v2
+        with:
+          token: ${{secrets.PAT}}
 
       # Setting up the env
       - name: Setting the python environment.
@@ -34,8 +36,7 @@ jobs:
       # Push to the production branch
       - name: Push to production branch
         run: |
-          git config --global user.name "Jubin Ben"
-          git config --global user.email "jubinben.666@gmail.com"
+          git config --get user.name "Jubin Ben"
           git checkout production
           git merge staging -m "All test cases passed so push staging -> production"
           git push origin production
