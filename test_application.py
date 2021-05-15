@@ -22,4 +22,4 @@ def test_case4():
 
 def test_case5():
     result = my_app.add_numbers(20, 20)
-    assert result == 50
+    assert result == 40
