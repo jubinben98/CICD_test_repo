@@ -30,6 +30,7 @@ jobs:
       - name: Run with pytest.
         run: |
           python -m pytest -v
+          cd
 
       # Push to the production branch
       - name: Push
