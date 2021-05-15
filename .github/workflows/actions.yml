@@ -34,8 +34,10 @@ jobs:
           python -m pytest -v
 
       # Push to the production branch
-      - name: Push production branch #push files into master branch
-        uses: ad-m/github-push-action@production
+      - name: Merge staging -> production
+        uses: devmasx/merge-branch@v1.3.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+          type: now
+          from_branch: staging
+          target_branch: production
+          github_token: ${{ github.token }}
