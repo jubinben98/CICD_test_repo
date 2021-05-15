@@ -30,7 +30,9 @@ jobs:
       - name: Run with pytest.
         run: |
           python -m pytest -v
-          cd
+          echo ----------------
+          echo %cd%
+          echo ----------------
 
       # Push to the production branch
       - name: Push
@@ -38,6 +40,7 @@ jobs:
         env:
           REPO: self
           BRANCH: production
-          FOLDER: null
+          CURRENT_DIR: %cd%
+          FOLDER: ${CURRENT_DIR}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Push from staging -> production"
