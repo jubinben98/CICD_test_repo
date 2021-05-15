@@ -31,7 +31,12 @@ jobs:
         run: |
           python -m pytest -v
 
-      # Push to the production branch
+  merge-branch:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+       # Push to the production branch
       - name: Merge staging -> production
         uses: devmasx/merge-branch@v1.3.1
         with:
