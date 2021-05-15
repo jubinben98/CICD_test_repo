@@ -31,7 +31,7 @@ jobs:
         run: |
           python -m pytest -v
 
-  create-pull-request:
+  Raising-pull-request:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -41,8 +41,11 @@ jobs:
         with:
           source_branch: "staging"
           destination_branch: "production"
-          pr_title: "Pulling ${{ github.ref }} into master"
-          pr_body: ":crown: *An automated PR*"
+          pr_title: "Automated PR from staging"
+          pr_body: |
+            Author : ${{ github.actor }}
+            Last Commit message: ${{ github.sha }}
+            Reference : ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 #  merge-to-production:
