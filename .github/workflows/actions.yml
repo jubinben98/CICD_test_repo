@@ -1,0 +1,46 @@
+# CICD actions for the Application testing during the push at staging branch.
+
+name: CICD Actions
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+
+      # Checking out the code
+      - name: Checkout the code.
+        uses: actions/checkout@v2
+
+      # Setting up the env
+      - name: Setting the python environment.
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.1
+
+      # Installing the dependencies
+      - name: Installing dependencies.
+        run: |
+          pip install -r .github/workflows/requirements.txt
+
+      # Running the test cases
+      - name: Run with pytest.
+        run: |
+          python -m pytest -v
+
+  merge-branch:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+       # Push to the production branch
+      - name: Merge staging -> production
+        uses: devmasx/merge-branch@v1.3.1
+        with:
+          type: now
+          from_branch: staging
+          target_branch: production
+          github_token: ${{ github.token }}
