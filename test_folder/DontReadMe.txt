@@ -1,4 +1,4 @@
 This is line 1.
 
-This is a edited line.
+This was line 2.
 This is line 3.
